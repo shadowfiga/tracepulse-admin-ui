@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import {
   Card,
   CardContent,
@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/form.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { Loader2 } from "lucide-react";
+import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
 import { Separator } from "@/components/ui/separator.tsx";
 import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "@/constants/app-routes.ts";
@@ -33,6 +33,7 @@ import useAccountStore from "@/store/account-store.ts";
 const LoginPage: FC = () => {
   const { setAccount } = useAccountStore();
   const navigate = useNavigate();
+  const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true);
   const form = useForm<LoginDto>({
     resolver: zodResolver(loginSchema),
     mode: "onSubmit",
@@ -95,8 +96,26 @@ const LoginPage: FC = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input type="password" {...field} />
+                  <FormControl className="relative">
+                    <div>
+                      <Input
+                        className="pr-[40px]"
+                        type={isPasswordHidden ? "password" : "text"}
+                        {...field}
+                      />
+                      <Button
+                        onClick={() => setIsPasswordHidden((prev) => !prev)}
+                        type="button"
+                        variant="ghost"
+                        className="absolute top-0 right-0 bottom-0 px-[10px] rounded-l-none"
+                      >
+                        {isPasswordHidden ? (
+                          <EyeIcon className="text-muted-foreground w-5 h-5" />
+                        ) : (
+                          <EyeOffIcon className="text-muted-foreground  w-5 h-5" />
+                        )}
+                      </Button>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -74,6 +74,7 @@ const ResetPasswordPage: FC = () => {
                   <FormControl className="relative">
                     <div>
                       <Input
+                        className="pr-[40px]"
                         type={isPasswordHidden ? "password" : "text"}
                         {...field}
                       />
@@ -81,7 +82,7 @@ const ResetPasswordPage: FC = () => {
                         onClick={() => setIsPasswordHidden((prev) => !prev)}
                         type="button"
                         variant="ghost"
-                        className="absolute top-0 right-0 bottom-0 px-[10px]"
+                        className="absolute top-0 right-0 bottom-0 px-[10px] rounded-l-none"
                       >
                         {isPasswordHidden ? (
                           <EyeIcon className="text-muted-foreground w-5 h-5" />
