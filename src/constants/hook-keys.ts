@@ -3,4 +3,5 @@ export enum HookKeys {
   createTodoMutation = "createTodoMutation",
   removeTodoMutation = "removeTodoMutation",
   resetPasswordMutation = "resetPasswordMutation",
+  loginMutation = "loginMutation",
 }

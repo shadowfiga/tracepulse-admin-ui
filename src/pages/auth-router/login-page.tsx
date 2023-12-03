@@ -13,8 +13,6 @@ import {
   LoginDto,
   loginSchema,
 } from "@/service/account-service/dto/login-dto.ts";
-import accountService from "@/service/account-service/account-service.ts";
-import { toast } from "@/components/ui/use-toast.ts";
 import { FormField, FormMessage } from "@/components/ui/form";
 import {
   Form,
@@ -28,33 +26,19 @@ import { EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
 import { Separator } from "@/components/ui/separator.tsx";
 import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "@/constants/app-routes.ts";
-import useAccountStore from "@/store/account-store.ts";
+import useLogin from "@/hooks/use-login.ts";
 
 const LoginPage: FC = () => {
-  const { setAccount } = useAccountStore();
   const navigate = useNavigate();
+  const { login, isLoginLoading } = useLogin();
   const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true);
   const form = useForm<LoginDto>({
     resolver: zodResolver(loginSchema),
     mode: "onSubmit",
   });
 
-  async function onSubmit(values: LoginDto) {
-    try {
-      await accountService.login(values);
-      const account = await accountService.my();
-      setAccount(account);
-      toast({
-        title: "Success",
-        description: "Successfully logged in.",
-      });
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Something went wrong! Please try again later.",
-        variant: "destructive",
-      });
-    }
+  async function onSubmit(dto: LoginDto) {
+    login(dto);
   }
 
   return (
@@ -134,11 +118,11 @@ const LoginPage: FC = () => {
         </a>
         <Button
           onClick={form.handleSubmit(onSubmit)}
-          disabled={form.formState.isSubmitting}
+          disabled={isLoginLoading}
           className="w-full"
         >
-          {!form.formState.isSubmitting && <span>Login</span>}
-          {form.formState.isSubmitting && <Loader2 />}
+          {!isLoginLoading && <span>Login</span>}
+          {isLoginLoading && <Loader2 />}
         </Button>
       </CardFooter>
     </Card>
