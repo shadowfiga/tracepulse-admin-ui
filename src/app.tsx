@@ -1,8 +1,7 @@
-import TodoPage from "@/pages/todo-page/todo-page.tsx";
+import AppRouter from "@/pages/app-router.tsx";
 
 function App() {
-  // Do some routing here or adhoc rendering
-  return <TodoPage />;
+  return <AppRouter />;
 }
 
 export default App;
