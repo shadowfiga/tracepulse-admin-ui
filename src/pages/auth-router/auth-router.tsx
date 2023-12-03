@@ -12,7 +12,7 @@ import ForgotPasswordCompletePage from "@/pages/auth-router/forgot-password-comp
 
 const AuthRouter: FC = () => {
   return (
-    <main className="bg-background w-full h-screen flex flex-col items-center justify-center">
+    <main className="bg-background w-full h-screen flex flex-col items-center justify-center bg-[url(/circuit-board.svg)] dark:bg-[url(/circuit-board-dark.svg)]">
       <Router>
         <Routes>
           <Route path={AppRoutes.login} element={<LoginPage />} />

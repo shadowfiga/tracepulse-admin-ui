@@ -28,8 +28,10 @@ import { Loader2 } from "lucide-react";
 import { Separator } from "@/components/ui/separator.tsx";
 import { useNavigate } from "react-router-dom";
 import { AppRoutes } from "@/constants/app-routes.ts";
+import useAccountStore from "@/store/account-store.ts";
 
 const LoginPage: FC = () => {
+  const { setAccount } = useAccountStore();
   const navigate = useNavigate();
   const form = useForm<LoginDto>({
     resolver: zodResolver(loginSchema),
@@ -39,14 +41,16 @@ const LoginPage: FC = () => {
   async function onSubmit(values: LoginDto) {
     try {
       await accountService.login(values);
+      const account = await accountService.my();
+      setAccount(account);
       toast({
         title: "Success",
-        description: "Form created successfully",
+        description: "Successfully logged in.",
       });
     } catch (error) {
       toast({
         title: "Error",
-        description: "Something went wrong, please try again later",
+        description: "Something went wrong! Please try again later.",
         variant: "destructive",
       });
     }
@@ -54,7 +58,7 @@ const LoginPage: FC = () => {
 
   return (
     <Card className="min-w-[520px]">
-      <CardHeader className="flex flex-row space-x-2">
+      <CardHeader className="flex flex-row space-x-2 items-center">
         <img
           src="/logo-128x128.webp"
           alt="Trace Pulse"
@@ -102,9 +106,9 @@ const LoginPage: FC = () => {
         </Form>
       </CardContent>
       <Separator />
-      <CardFooter className="flex flex-col space-y-2">
+      <CardFooter className="grid grid-cols-2 items-center justify-between mt-4">
         <a
-          className="text-sm mt-2 underline cursor-pointer"
+          className="text-sm hover:underline cursor-pointer text-muted-foreground"
           onClick={() => navigate(AppRoutes.forgotPassword)}
         >
           Forgot password?

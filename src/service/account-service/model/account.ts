@@ -1,10 +1,12 @@
 import { AccountDto } from "@/service/account-service/dto/account-dto.ts";
 
 export default class Account implements AccountDto {
+  public readonly id: string;
   public readonly email: string;
 
   protected constructor(obj: AccountDto) {
-    const { email } = obj;
+    const { email, id } = obj;
+    this.id = id;
     this.email = email;
   }
 
