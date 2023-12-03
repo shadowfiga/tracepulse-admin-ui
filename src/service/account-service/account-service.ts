@@ -4,6 +4,7 @@ import fetcher from "@/utils/fetcher.ts";
 import { processResponse } from "@/utils/process-response.ts";
 import { AccountDto } from "@/service/account-service/dto/account-dto.ts";
 import { ForgotPasswordDto } from "@/service/account-service/dto/forgot-password-dto.ts";
+import { PasswordResetDto } from "@/service/account-service/dto/password-reset-dto.ts";
 
 class AccountService {
   public async login(dto: LoginDto): Promise<void> {
@@ -14,6 +15,12 @@ class AccountService {
 
   public async forgotPassword(dto: ForgotPasswordDto): Promise<void> {
     await fetcher.post("account/forgot-password", {
+      json: dto,
+    });
+  }
+
+  public async resetPassword(dto: PasswordResetDto): Promise<void> {
+    await fetcher.post("account/reset-password", {
       json: dto,
     });
   }

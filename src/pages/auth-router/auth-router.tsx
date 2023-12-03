@@ -8,7 +8,7 @@ import {
 import { AppRoutes } from "@/constants/app-routes.ts";
 import LoginPage from "@/pages/auth-router/login-page.tsx";
 import ForgotPasswordPage from "@/pages/auth-router/forgot-password-page.tsx";
-import ForgotPasswordCompletePage from "@/pages/auth-router/forgot-password-complete-page.tsx";
+import PasswordResetPage from "@/pages/auth-router/password-reset-page.tsx";
 
 const AuthRouter: FC = () => {
   return (
@@ -21,8 +21,8 @@ const AuthRouter: FC = () => {
             element={<ForgotPasswordPage />}
           />
           <Route
-            path={AppRoutes.forgotPasswordComplete}
-            element={<ForgotPasswordCompletePage />}
+            path={AppRoutes.passwordReset}
+            element={<PasswordResetPage />}
           />
           <Route path="*" element={<Navigate to={AppRoutes.login} />} />
         </Routes>

@@ -7,43 +7,49 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card.tsx";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import accountService from "@/service/account-service/account-service.ts";
-import { toast } from "@/components/ui/use-toast.ts";
-import { FormField, FormMessage } from "@/components/ui/form";
+import { Separator } from "@/components/ui/separator.tsx";
 import {
   Form,
   FormControl,
+  FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { ArrowLeft, Loader2 } from "lucide-react";
-import { Separator } from "@/components/ui/separator.tsx";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import accountService from "@/service/account-service/account-service.ts";
+import { toast } from "@/components/ui/use-toast.ts";
 import {
-  ForgotPasswordDto,
-  forgotPasswordSchema,
-} from "@/service/account-service/dto/forgot-password-dto.ts";
+  PasswordResetDto,
+  passwordResetSchema,
+} from "@/service/account-service/dto/password-reset-dto.ts";
+import { AppRoutes } from "@/constants/app-routes.ts";
 
-const ForgotPasswordPage: FC = () => {
+const PasswordResetPage: FC = () => {
   const navigate = useNavigate();
-  const form = useForm<ForgotPasswordDto>({
-    resolver: zodResolver(forgotPasswordSchema),
+  const form = useForm<PasswordResetDto>({
+    resolver: zodResolver(passwordResetSchema),
     mode: "onSubmit",
+    defaultValues: {
+      password: "",
+      passwordRepeat: "",
+      token: "",
+    },
   });
 
-  async function onSubmit(values: ForgotPasswordDto) {
+  async function onSubmit(values: PasswordResetDto) {
     try {
-      await accountService.forgotPassword(values);
+      await accountService.resetPassword(values);
       toast({
         title: "Success",
-        description:
-          "If the email exists, further instruction will be sent out.",
+        description: "Successfully reset password.",
       });
-      navigate(-1);
+      navigate(AppRoutes.login);
     } catch (error) {
       toast({
         title: "Error",
@@ -63,8 +69,8 @@ const ForgotPasswordPage: FC = () => {
           className="w-16 h-16 rounded-xl"
         />
         <div className="flex flex-col">
-          <CardTitle className="text-2xl">Forgot password</CardTitle>
-          <CardDescription>Please provide us with your email.</CardDescription>
+          <CardTitle className="text-2xl">Reset password</CardTitle>
+          <CardDescription>Please enter your new password.</CardDescription>
         </div>
       </CardHeader>
       <Separator />
@@ -73,7 +79,7 @@ const ForgotPasswordPage: FC = () => {
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
             <FormField
               control={form.control}
-              name="email"
+              name="password"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
@@ -82,6 +88,28 @@ const ForgotPasswordPage: FC = () => {
                   </FormControl>
                   <FormMessage />
                 </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="passwordRepeat"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="token"
+              render={({ field }) => (
+                <FormControl>
+                  <Input type="hidden" {...field} />
+                </FormControl>
               )}
             />
           </form>
@@ -105,4 +133,4 @@ const ForgotPasswordPage: FC = () => {
   );
 };
 
-export default ForgotPasswordPage;
+export default PasswordResetPage;
