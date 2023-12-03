@@ -12,20 +12,22 @@ import ForgotPasswordCompletePage from "@/pages/auth-router/forgot-password-comp
 
 const AuthRouter: FC = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path={AppRoutes.login} element={<LoginPage />} />
-        <Route
-          path={AppRoutes.forgotPassword}
-          element={<ForgotPasswordPage />}
-        />
-        <Route
-          path={AppRoutes.forgotPasswordComplete}
-          element={<ForgotPasswordCompletePage />}
-        />
-        <Route path="*" element={<Navigate to={AppRoutes.login} />} />
-      </Routes>
-    </Router>
+    <main className="bg-background w-full h-screen flex flex-col items-center justify-center">
+      <Router>
+        <Routes>
+          <Route path={AppRoutes.login} element={<LoginPage />} />
+          <Route
+            path={AppRoutes.forgotPassword}
+            element={<ForgotPasswordPage />}
+          />
+          <Route
+            path={AppRoutes.forgotPasswordComplete}
+            element={<ForgotPasswordCompletePage />}
+          />
+          <Route path="*" element={<Navigate to={AppRoutes.login} />} />
+        </Routes>
+      </Router>
+    </main>
   );
 };
 
