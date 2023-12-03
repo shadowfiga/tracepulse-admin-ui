@@ -9,8 +9,6 @@ import {
 } from "@/components/ui/card.tsx";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import accountService from "@/service/account-service/account-service.ts";
-import { toast } from "@/components/ui/use-toast.ts";
 import { FormField, FormMessage } from "@/components/ui/form";
 import {
   Form,
@@ -27,30 +25,19 @@ import {
   ForgotPasswordDto,
   forgotPasswordSchema,
 } from "@/service/account-service/dto/forgot-password-dto.ts";
+import useForgotPassword from "@/hooks/use-forgot-password.ts";
 
 const ForgotPasswordPage: FC = () => {
   const navigate = useNavigate();
+  const { forgotPassword, isForgotPasswordLoading } = useForgotPassword();
   const form = useForm<ForgotPasswordDto>({
     resolver: zodResolver(forgotPasswordSchema),
     mode: "onSubmit",
   });
 
-  async function onSubmit(values: ForgotPasswordDto) {
-    try {
-      await accountService.forgotPassword(values);
-      toast({
-        title: "Success",
-        description:
-          "If the email exists, further instruction will be sent out.",
-      });
-      navigate(-1);
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Something went wrong! Please try again later.",
-        variant: "destructive",
-      });
-    }
+  async function onSubmit(dto: ForgotPasswordDto) {
+    await forgotPassword(dto);
+    navigate(-1);
   }
 
   return (
@@ -94,11 +81,11 @@ const ForgotPasswordPage: FC = () => {
         </Button>
         <Button
           onClick={form.handleSubmit(onSubmit)}
-          disabled={form.formState.isSubmitting}
+          disabled={isForgotPasswordLoading}
           className="w-full"
         >
-          {!form.formState.isSubmitting && <span>Submit</span>}
-          {form.formState.isSubmitting && <Loader2 />}
+          {!isForgotPasswordLoading && <span>Submit</span>}
+          {isForgotPasswordLoading && <Loader2 />}
         </Button>
       </CardFooter>
     </Card>
