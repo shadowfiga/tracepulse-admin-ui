@@ -19,7 +19,7 @@ import {
 import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { ArrowLeft, EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -28,8 +28,15 @@ import {
 } from "@/service/account-service/dto/reset-password-dto.ts";
 import { AppRoutes } from "@/constants/app-routes.ts";
 import useResetPassword from "@/hooks/use-reset-password.ts";
+import { isEmpty, isNil } from "lodash";
+import { toast } from "@/components/ui/use-toast.ts";
 
-const ResetPasswordPage: FC = () => {
+export interface ResetPasswordPageProps {
+  token: string;
+}
+
+const ResetPasswordPage: FC<ResetPasswordPageProps> = (props) => {
+  const { token } = props;
   const navigate = useNavigate();
   const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true);
   const form = useForm<ResetPasswordDto>({
@@ -38,7 +45,7 @@ const ResetPasswordPage: FC = () => {
     defaultValues: {
       password: "",
       passwordRepeat: "",
-      token: "",
+      token,
     },
   });
   const { resetPassword, isResetPasswordLoading } = useResetPassword();
@@ -142,4 +149,19 @@ const ResetPasswordPage: FC = () => {
   );
 };
 
-export default ResetPasswordPage;
+const ResetPasswordPageWrapper: FC = () => {
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get("token");
+  if (!token || isNil(token) || isEmpty(token)) {
+    toast({
+      variant: "destructive",
+      title: "Error",
+      description:
+        "Could not find token, please make sure the link is correct.",
+    });
+    return <Navigate to={AppRoutes.login} />;
+  }
+  return <ResetPasswordPage token={token} />;
+};
+
+export default ResetPasswordPageWrapper;
