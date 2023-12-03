@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card.tsx";
-import { Form, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   LoginDto,
@@ -14,16 +14,18 @@ import {
 import accountService from "@/service/account-service/account-service.ts";
 import { toast } from "@/components/ui/use-toast.ts";
 import { FormField, FormMessage } from "@/components/ui/form";
-import { FormControl, FormItem, FormLabel } from "@/components/ui/form.tsx";
+import {
+  Form,
+  FormControl,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form.tsx";
 import { Input } from "@/components/ui/input.tsx";
 
 const LoginPage: FC = () => {
   const form = useForm<LoginDto>({
     resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+    mode: "onSubmit",
   });
 
   async function onSubmit(values: LoginDto) {
