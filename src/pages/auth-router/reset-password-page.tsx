@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import {
   Card,
   CardContent,
@@ -18,22 +18,22 @@ import {
 } from "@/components/ui/form.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { ArrowLeft, EyeIcon, EyeOffIcon, Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import accountService from "@/service/account-service/account-service.ts";
-import { toast } from "@/components/ui/use-toast.ts";
 import {
-  PasswordResetDto,
-  passwordResetSchema,
-} from "@/service/account-service/dto/password-reset-dto.ts";
+  ResetPasswordDto,
+  resetPasswordSchema,
+} from "@/service/account-service/dto/reset-password-dto.ts";
 import { AppRoutes } from "@/constants/app-routes.ts";
+import useResetPassword from "@/hooks/use-reset-password.ts";
 
-const PasswordResetPage: FC = () => {
+const ResetPasswordPage: FC = () => {
   const navigate = useNavigate();
-  const form = useForm<PasswordResetDto>({
-    resolver: zodResolver(passwordResetSchema),
+  const [isPasswordHidden, setIsPasswordHidden] = useState<boolean>(true);
+  const form = useForm<ResetPasswordDto>({
+    resolver: zodResolver(resetPasswordSchema),
     mode: "onSubmit",
     defaultValues: {
       password: "",
@@ -41,22 +41,10 @@ const PasswordResetPage: FC = () => {
       token: "",
     },
   });
-
-  async function onSubmit(values: PasswordResetDto) {
-    try {
-      await accountService.resetPassword(values);
-      toast({
-        title: "Success",
-        description: "Successfully reset password.",
-      });
-      navigate(AppRoutes.login);
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Something went wrong! Please try again later.",
-        variant: "destructive",
-      });
-    }
+  const { resetPassword, isResetPasswordLoading } = useResetPassword();
+  async function onSubmit(values: ResetPasswordDto) {
+    await resetPassword(values);
+    navigate(AppRoutes.login);
   }
 
   return (
@@ -82,9 +70,26 @@ const PasswordResetPage: FC = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
+                  <FormLabel>Password</FormLabel>
+                  <FormControl className="relative">
+                    <div>
+                      <Input
+                        type={isPasswordHidden ? "password" : "text"}
+                        {...field}
+                      />
+                      <Button
+                        onClick={() => setIsPasswordHidden((prev) => !prev)}
+                        type="button"
+                        variant="ghost"
+                        className="absolute top-0 right-0 bottom-0 px-[10px]"
+                      >
+                        {isPasswordHidden ? (
+                          <EyeIcon className="text-muted-foreground w-5 h-5" />
+                        ) : (
+                          <EyeOffIcon className="text-muted-foreground  w-5 h-5" />
+                        )}
+                      </Button>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -95,9 +100,12 @@ const PasswordResetPage: FC = () => {
               name="passwordRepeat"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Repeat password</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input
+                      type={isPasswordHidden ? "password" : "text"}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -122,15 +130,15 @@ const PasswordResetPage: FC = () => {
         </Button>
         <Button
           onClick={form.handleSubmit(onSubmit)}
-          disabled={form.formState.isSubmitting}
+          disabled={isResetPasswordLoading}
           className="w-full"
         >
-          {!form.formState.isSubmitting && <span>Submit</span>}
-          {form.formState.isSubmitting && <Loader2 />}
+          {!isResetPasswordLoading && <span>Submit</span>}
+          {isResetPasswordLoading && <Loader2 />}
         </Button>
       </CardFooter>
     </Card>
   );
 };
 
-export default PasswordResetPage;
+export default ResetPasswordPage;
