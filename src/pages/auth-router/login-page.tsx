@@ -2,6 +2,8 @@ import { FC } from "react";
 import {
   Card,
   CardContent,
+  CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card.tsx";
@@ -21,8 +23,14 @@ import {
   FormLabel,
 } from "@/components/ui/form.tsx";
 import { Input } from "@/components/ui/input.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import { Loader2 } from "lucide-react";
+import { Separator } from "@/components/ui/separator.tsx";
+import { useNavigate } from "react-router-dom";
+import { AppRoutes } from "@/constants/app-routes.ts";
 
 const LoginPage: FC = () => {
+  const navigate = useNavigate();
   const form = useForm<LoginDto>({
     resolver: zodResolver(loginSchema),
     mode: "onSubmit",
@@ -45,11 +53,23 @@ const LoginPage: FC = () => {
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Login</CardTitle>
+    <Card className="min-w-[520px]">
+      <CardHeader className="flex flex-row space-x-2">
+        <img
+          src="/logo-128x128.webp"
+          alt="Trace Pulse"
+          title="Trace Pulse"
+          className="w-16 h-16 rounded-xl"
+        />
+        <div className="flex flex-col">
+          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardDescription>
+            Welcome to Trace Pulse! Please login to continue.
+          </CardDescription>
+        </div>
       </CardHeader>
-      <CardContent>
+      <Separator />
+      <CardContent className="mt-2">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
             <FormField
@@ -81,6 +101,23 @@ const LoginPage: FC = () => {
           </form>
         </Form>
       </CardContent>
+      <Separator />
+      <CardFooter className="flex flex-col space-y-2">
+        <a
+          className="text-sm mt-2 underline cursor-pointer"
+          onClick={() => navigate(AppRoutes.forgotPassword)}
+        >
+          Forgot password?
+        </a>
+        <Button
+          onClick={form.handleSubmit(onSubmit)}
+          disabled={form.formState.isSubmitting}
+          className="w-full"
+        >
+          {!form.formState.isSubmitting && <span>Login</span>}
+          {form.formState.isSubmitting && <Loader2 />}
+        </Button>
+      </CardFooter>
     </Card>
   );
 };
