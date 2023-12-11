@@ -69,7 +69,7 @@ const ProjectSwitcher: FC<TeamSwitcherProps> = ({ className }) => {
             aria-label="Select a team"
             className={cn("justify-between w-full bg-background", className)}
           >
-            <span className="mr-2 text-slate-500 font-light">Project</span>
+            <span className="mr-2 text-muted font-light">Project</span>
             {selectedTeam.label}
             <CaretSortIcon className="ml-auto h-4 w-4 shrink-0 opacity-50" />
           </Button>

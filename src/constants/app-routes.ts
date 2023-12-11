@@ -6,4 +6,6 @@ export enum AppRoutes {
   // Dashboard
   overview = "/overview",
   events = "/events",
+  projectSettings = "/project-settings",
+  settings = "/settings",
 }

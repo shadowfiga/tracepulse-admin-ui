@@ -28,7 +28,7 @@ const AuthRouter: FC = () => {
           <Route path="*" element={<Navigate to={AppRoutes.login} />} />
         </Routes>
       </Router>
-      <div className="absolute top-[20px] right-[20px]">
+      <div className="absolute top-2 right-2">
         <ModeToggle />
       </div>
     </main>
