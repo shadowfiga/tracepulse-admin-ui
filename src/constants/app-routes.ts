@@ -3,4 +3,7 @@ export enum AppRoutes {
   login = "/login",
   forgotPassword = "/forgot-password",
   resetPassword = "/reset-password",
+  // Dashboard
+  overview = "/overview",
+  events = "/events",
 }
