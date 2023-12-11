@@ -34,8 +34,8 @@ const Sidebar: FC = () => {
           onClick={() => navigate(l.to)}
           variant="ghost"
           className={cn(
-            "w-full bg-background justify-start",
-            location.pathname !== l.to && "text-muted",
+            "w-full bg-background justify-start font-light text-muted",
+            location.pathname === l.to && "font-medium text-foreground",
           )}
         >
           {l.icon}

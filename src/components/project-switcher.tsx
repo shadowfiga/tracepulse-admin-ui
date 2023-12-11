@@ -1,4 +1,5 @@
 import * as React from "react";
+import { FC } from "react";
 import {
   CaretSortIcon,
   CheckIcon,
@@ -6,7 +7,6 @@ import {
 } from "@radix-ui/react-icons";
 
 import { cn } from "@/lib/utils";
-import { FC } from "react";
 import { Button } from "@/components/ui/button.tsx";
 import {
   Dialog,
@@ -69,7 +69,7 @@ const ProjectSwitcher: FC<TeamSwitcherProps> = ({ className }) => {
             aria-label="Select a team"
             className={cn("justify-between w-full bg-background", className)}
           >
-            <span className="mr-2 text-slate-500">Project</span>
+            <span className="mr-2 text-slate-500 font-light">Project</span>
             {selectedTeam.label}
             <CaretSortIcon className="ml-auto h-4 w-4 shrink-0 opacity-50" />
           </Button>
