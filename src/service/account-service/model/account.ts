@@ -1,4 +1,4 @@
-import { AccountDto } from "@/service/account-service/dto/account-dto.ts";
+import { AccountDto } from "@/service/account-service/schema/account-schema.ts";
 
 export default class Account implements AccountDto {
   public readonly id: string;

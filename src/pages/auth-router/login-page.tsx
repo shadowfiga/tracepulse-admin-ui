@@ -12,7 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   LoginDto,
   loginSchema,
-} from "@/service/account-service/dto/login-dto.ts";
+} from "@/service/account-service/schema/login-schema.ts";
 import { FormField, FormMessage } from "@/components/ui/form";
 import {
   Form,

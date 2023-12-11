@@ -24,7 +24,7 @@ import { useNavigate } from "react-router-dom";
 import {
   ForgotPasswordDto,
   forgotPasswordSchema,
-} from "@/service/account-service/dto/forgot-password-dto.ts";
+} from "@/service/account-service/schema/forgot-password-schema.ts";
 import useForgotPassword from "@/hooks/use-forgot-password.ts";
 
 const ForgotPasswordPage: FC = () => {

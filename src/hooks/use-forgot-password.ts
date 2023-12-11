@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { HookKeys } from "@/constants/hook-keys.ts";
 import accountService from "@/service/account-service/account-service.ts";
 import { toast } from "@/components/ui/use-toast.ts";
-import { ForgotPasswordDto } from "@/service/account-service/dto/forgot-password-dto.ts";
+import { ForgotPasswordDto } from "@/service/account-service/schema/forgot-password-schema.ts";
 
 export interface UseForgotPasswor {
   forgotPassword: (dto: ForgotPasswordDto) => Promise<void>;

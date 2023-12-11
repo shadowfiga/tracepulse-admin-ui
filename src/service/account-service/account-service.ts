@@ -1,10 +1,10 @@
-import { LoginDto } from "@/service/account-service/dto/login-dto.ts";
+import { LoginDto } from "@/service/account-service/schema/login-schema.ts";
 import Account from "@/service/account-service/model/account.ts";
 import fetcher from "@/utils/fetcher.ts";
 import { processResponse } from "@/utils/process-response.ts";
-import { AccountDto } from "@/service/account-service/dto/account-dto.ts";
-import { ForgotPasswordDto } from "@/service/account-service/dto/forgot-password-dto.ts";
-import { ResetPasswordDto } from "@/service/account-service/dto/reset-password-dto.ts";
+import { AccountDto } from "@/service/account-service/schema/account-schema.ts";
+import { ForgotPasswordDto } from "@/service/account-service/schema/forgot-password-schema.ts";
+import { ResetPasswordDto } from "@/service/account-service/schema/reset-password-schema.ts";
 
 class AccountService {
   public async login(dto: LoginDto): Promise<void> {

@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { HookKeys } from "@/constants/hook-keys.ts";
-import accountService from "@/service/account-service/account-service.ts";
 import { toast } from "@/components/ui/use-toast.ts";
-import { LoginDto } from "@/service/account-service/dto/login-dto.ts";
+import { LoginDto } from "@/service/account-service/schema/login-schema.ts";
 import useAccountStore from "@/store/account-store.ts";
+import accountService from "@/service/account-service/account-service.ts";
 
 export interface UseLogin {
   login: (dto: LoginDto) => void;

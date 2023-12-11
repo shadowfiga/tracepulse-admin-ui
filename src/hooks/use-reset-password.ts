@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { HookKeys } from "@/constants/hook-keys.ts";
-import { ResetPasswordDto } from "@/service/account-service/dto/reset-password-dto.ts";
+import { ResetPasswordDto } from "@/service/account-service/schema/reset-password-schema.ts";
 import accountService from "@/service/account-service/account-service.ts";
 import { toast } from "@/components/ui/use-toast.ts";
 

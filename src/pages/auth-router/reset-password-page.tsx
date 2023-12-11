@@ -25,7 +25,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   ResetPasswordDto,
   resetPasswordSchema,
-} from "@/service/account-service/dto/reset-password-dto.ts";
+} from "@/service/account-service/schema/reset-password-schema.ts";
 import { AppRoutes } from "@/constants/app-routes.ts";
 import useResetPassword from "@/hooks/use-reset-password.ts";
 import { isEmpty, isNil } from "lodash";
