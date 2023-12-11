@@ -27,15 +27,15 @@ const links: AppLink[] = [
   {
     label: "Settings",
     icon: <Sliders size={18} className="mr-2" />,
-    to: AppRoutes.projectSettings,
+    to: AppRoutes.settings,
   },
 ];
 
 const profileLinks: AppLink[] = [
   {
-    label: "Settings",
+    label: "Preferences",
     icon: <Settings size={18} className="mr-2" />,
-    to: AppRoutes.settings,
+    to: AppRoutes.preferences,
   },
 ];
 

@@ -10,8 +10,8 @@ import OverviewPage from "@/pages/dashboard-router/overview-page/overview-page.t
 import EventsPage from "@/pages/dashboard-router/events-page/events-page.tsx";
 import Sidebar from "@/pages/dashboard-router/components/sidebar.tsx";
 import SettingsPage from "@/pages/dashboard-router/settings-page/settings-page.tsx";
-import ProjectSettings from "@/pages/dashboard-router/project-settings/project-settings.tsx";
 import ModeToggle from "@/components/mode-toggle.tsx";
+import PreferencesPage from "@/pages/dashboard-router/preferences-page/preferences-page.tsx";
 
 const DashboardRouter: FC = () => {
   return (
@@ -22,11 +22,8 @@ const DashboardRouter: FC = () => {
           <Routes>
             <Route path={AppRoutes.overview} element={<OverviewPage />} />
             <Route path={AppRoutes.events} element={<EventsPage />} />
+            <Route path={AppRoutes.preferences} element={<PreferencesPage />} />
             <Route path={AppRoutes.settings} element={<SettingsPage />} />
-            <Route
-              path={AppRoutes.projectSettings}
-              element={<ProjectSettings />}
-            />
             <Route path="*" element={<Navigate to={AppRoutes.overview} />} />
           </Routes>
         </section>
