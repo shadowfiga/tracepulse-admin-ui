@@ -8,4 +8,5 @@ export enum AppRoutes {
   events = "/events",
   settings = "/settings",
   preferences = "/preferences",
+  webhooks = "/webhooks",
 }

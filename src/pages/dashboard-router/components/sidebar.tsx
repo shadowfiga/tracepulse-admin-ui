@@ -3,7 +3,7 @@ import ProjectSwitcher from "@/components/project-switcher.tsx";
 import { Separator } from "@/components/ui/separator.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { cn } from "@/lib/utils.ts";
-import { PieChart, Settings, Sliders, Waypoints } from "lucide-react";
+import { PieChart, Settings, Sliders, Waypoints, Webhook } from "lucide-react";
 import { AppRoutes } from "@/constants/app-routes.ts";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -25,8 +25,13 @@ const links: AppLink[] = [
     to: AppRoutes.events,
   },
   {
+    label: "Webhooks",
+    icon: <Webhook size={18} className="mr-2" />,
+    to: AppRoutes.webhooks,
+  },
+  {
     label: "Settings",
-    icon: <Sliders size={18} className="mr-2" />,
+    icon: <Settings size={18} className="mr-2" />,
     to: AppRoutes.settings,
   },
 ];
@@ -34,7 +39,7 @@ const links: AppLink[] = [
 const profileLinks: AppLink[] = [
   {
     label: "Preferences",
-    icon: <Settings size={18} className="mr-2" />,
+    icon: <Sliders size={18} className="mr-2" />,
     to: AppRoutes.preferences,
   },
 ];
